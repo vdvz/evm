@@ -2,29 +2,46 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <string>
+#include <sys/times.h>
+#include <unistd.h>
+
 using namespace std;
 
 const unsigned long int N = 20000000;
 
-int main() {
+int function() {
 	unsigned long int pi = 0;
-
 	for (int i = 0; i < N; i++) {
 		pi += 4 * (pow(-1, i)) / (2 * i + 1);
 	}
+	return 0;
+}
+
+int main() {
+	int expected_time = 15;
 	string data;
+	struct tms start, end;
 	const int max_buffer = 256;
+	long clocks_per_sec = sysconf(_SC_CLK_TCK);
+	long clocks;
 	char buffer[max_buffer];
-
-
-	FILE * stream = popen("vmstat", "r");
+	FILE * stream = _popen("vmstat", "r");
 	if (stream) {
 		while (!feof(stream))
 			if (fgets(buffer, max_buffer, stream) != nullptr) data.append(buffer);
-		pclose(stream);
+		_pclose(stream);
 	}
 	
-	cout << data;
-
+	if (stoi(data.substr(data.length() - 6, 2)) >= 40){
+		times(&start);
+		function();
+		times(&end);
+		clocks = end.tms_utime - start.tms_utime;
+		printf("Time taken: %lf sec.\n", (double)clocks / clocks_per_sec);
+	}
+	else {
+	
+	}
 	return 0;
 }
