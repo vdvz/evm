@@ -46,7 +46,7 @@ int main() {
 		clock_gettime(CLOCK_MONOTONIC_RAW, &start_ts);
 		function();
 		clock_gettime(CLOCK_MONOTONIC_RAW, &end_ts);
-		long double time = end.tv_sec - start.tv_sec + 0.000000001 * (end.tv_nsec - start.tv_nsec);
+		long double time = end_ts.tv_sec - start_ts.tv_sec + 0.000000001 * (end_ts.tv_nsec - start_ts.tv_nsec);
 		if(true) {
 			printf("Time taken: %lf sec.\n", time);
 		}
