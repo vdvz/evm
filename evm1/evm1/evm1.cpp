@@ -5,7 +5,7 @@
 #include <string>
 #include <sys/times.h>
 #include <unistd.h>
-#include<time.h>
+#include <time.h>
 
 using namespace std;
 
@@ -20,6 +20,7 @@ int function() {
 }
 
 int main() {
+	system("sync");
 	int expected_time = 15;
 	string data;
 	struct tms start, end;
@@ -41,12 +42,11 @@ int main() {
 		times(&end);
 		clocks = end.tms_utime - start.tms_utime;
 		printf("Time taken: %lf sec.\n", (double)clocks / clocks_per_sec);
-	}
-	else{
+	}else{
 		clock_gettime(CLOCK_MONOTONIC_RAW, &start_ts);
 		function();
 		clock_gettime(CLOCK_MONOTONIC_RAW, &end_ts);
-		long double time = end_ts.tv_sec - start_ts.tv_sec + 0.000000001 * (end_ts.tv_nsec - start_ts.tv_nsec);
+		double time = end_ts.tv_sec - start_ts.tv_sec + 0.000000001 * (end_ts.tv_nsec - start_ts.tv_nsec);
 		if(true) {
 			printf("Time taken: %lf sec.\n", time);
 		}
