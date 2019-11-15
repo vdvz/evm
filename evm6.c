@@ -29,16 +29,16 @@ int main(){
     printf("* количество возможных конфигураций\n");
     printf("|  * класс устройства\n");
     printf("|  |  * идентификатор производителя\n");
-    printf("|  |  |    * идентификатор устройства\n");
-    printf("|  |  |    |    * количество интерфейсов\n");
-    printf("|  |  |    |    |   * количество ""альтернативных настроек\n");
-    printf("|  |  |    |    |   |  *  класс устройства\n");
-    printf("|  |  |    |    |   |  |  * номер интерфейса\n");
-    printf("|  |  |    |    |   |  |  |  * количество ""конечных точек\n");
-    printf("|  |  |    |    |   |  |  |  |  * тип дескриптора\n");
-    printf("|  |  |    |    |   |  |  |  |  |  * адрес ""конечной точки\n");
-    printf("|  |  |    |    |   |  |  |  |  |  |         * серийный ""номер\n");
-    printf("+--+--+----+----+---+--+--+--+""--+--+---------+------------\n");
+    printf("|  |  |     * идентификатор устройства\n");
+    printf("|  |  |     |     * количество интерфейсов\n");
+    printf("|  |  |     |     |   * количество ""альтернативных настроек\n");
+    printf("|  |  |     |     |   |  *  класс устройства\n");
+    printf("|  |  |     |     |   |  |  * номер интерфейса\n");
+    printf("|  |  |     |     |   |  |  |  * количество ""конечных точек\n");
+    printf("|  |  |     |     |   |  |  |  |  * тип дескриптора\n");
+    printf("|  |  |     |     |   |  |  |  |  |  * адрес ""конечной точки\n");
+    printf("|  |  |     |     |   |  |  |  |  |  |         * серийный ""номер\n");
+    printf("+--+--+-----+-----+---+--+--+--+""--+--+---------+------------\n");
     for(i = 0; i < cnt; i++) {  //цикл перебора всех устройств
         printdev(devs[i]);//печать параметров устройства
     }
@@ -65,7 +65,7 @@ void printdev(libusb_device *dev){
     //получить конфигурацию устройства
     libusb_get_config_descriptor(dev, 0, &config);
     
-    printf("%.2d %.2d %.4d %.4d %.3d |  |  |  |  |  |         |\n",
+    printf("%.2d %.2d %.5d %.5d %.3d |  |  |  |  |  |         |\n",
             (int)desc.bNumConfigurations,
             (int)desc.bDeviceClass,
             desc.idVendor,desc.idProduct,
@@ -73,21 +73,21 @@ void printdev(libusb_device *dev){
     
     for(int i=0; i<(int)config->bNumInterfaces; i++){
         inter = &config->interface[i];
-        printf("|  |  |    |    |   "
+        printf("|  |  |     |     |   "
                 "%.2d %.2d |  |  |  |         |\n",
                 inter->num_altsetting,
                 (int)desc.bDeviceClass
                 );
         for(int j=0; j<inter->num_altsetting; j++){
             interdesc = &inter->altsetting[j];
-            printf("|  |  |    |    |   |  |  "
+            printf("|  |  |     |     |   |  |  "
                      "%.2d %.2d |  |         |\n",
                     (int)interdesc->bInterfaceNumber,
                     (int)interdesc->bNumEndpoints);
             
             for(int k=0; k<(int)interdesc->bNumEndpoints; k++) {
                 epdesc = &interdesc->endpoint[k];
-                printf("|  |  |    |    |   |  |  |  |  "
+                printf("|  |  |     |     |   |  |  |  |  "
                         "%.2d %.9d|\n",
                         (int)epdesc->bDescriptorType,
                         (int)(int)epdesc->bEndpointAddress
@@ -103,7 +103,7 @@ void printdev(libusb_device *dev){
 		if (desc.iSerialNumber) {
 			ret = libusb_get_string_descriptor_ascii(handle, desc.iSerialNumber, string, sizeof(string));
 			if (ret > 0)
-                printf("|  |  |    |    |   |  |  |  |  |  |         "
+                printf("|  |  |     |     |   |  |  |  |  |  |         "
                         "%s\n",
                         string
                 );
