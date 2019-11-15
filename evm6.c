@@ -37,8 +37,8 @@ int main(){
     printf("|  |  |    |    |   |  |  |  * количество ""конечных точек\n");
     printf("|  |  |    |    |   |  |  |  |  * тип дескриптора\n");
     printf("|  |  |    |    |   |  |  |  |  |  * адрес ""конечной точки\n");
-    printf("|  |  |    |    |   |  |  |  |  |  |  |* серийный ""номер\n");
-    printf("+--+--+----+----+---+--+--+--+""--+--+--+-------------------\n");
+    printf("|  |  |    |    |   |  |  |  |  |  |         |* серийный ""номер\n");
+    printf("+--+--+----+----+---+--+--+--+""--+--+--------+-------------\n");
     for(i = 0; i < cnt; i++) {  //цикл перебора всех устройств
         printdev(devs[i]);//печать параметров устройства
     }
@@ -103,8 +103,8 @@ void printdev(libusb_device *dev){
 		if (desc.iSerialNumber) {
 			ret = libusb_get_string_descriptor_ascii(handle, desc.iSerialNumber, string, sizeof(string));
 			if (ret > 0)
-				printf("|  |  |    |    |   |  |  |  |  "
-                        "%s \n",
+                printf("|  |  |    |    |   |  |  |  |  |  |         "
+                        "%s\n",
                         string
                 );
 			else{
