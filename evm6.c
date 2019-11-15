@@ -21,7 +21,7 @@ int main(){
     // получить список всех найденных USB-устройств
     cnt = libusb_get_device_list(ctx, &devs);
     if(cnt < 0){
-        fprintf(stderr,"Ошибка: список USB устройств не получен.\n", r);
+        fprintf(stderr, "Ошибка: список USB устройств не получен.\  n", r);
         return 1;
     }
     printf("найдено устройств: %d\n", cnt);
@@ -53,6 +53,7 @@ void printdev(libusb_device *dev){
     libusb_device_descriptor desc;//дескриптор устройства
     libusb_config_descriptor *config;//дескриптор конфигурации объекта
     const libusb_interface *inter;
+    libusb_device_handle *handle = NULL;
     const libusb_interface_descriptor *interdesc;
     const libusb_endpoint_descriptor *epdesc;
     int r = libusb_get_device_descriptor(dev, &desc);
@@ -93,4 +94,23 @@ void printdev(libusb_device *dev){
             }
         }
     }
+    
     libusb_free_config_descriptor(config);
+    int ret = libusb_open(dev, &handle);
+    char string[256];
+    if (LIBUSB_SUCCESS == ret) {
+		if (desc.iSerialNumber) {
+			ret = libusb_get_string_descriptor_ascii(handle, desc.iSerialNumber, string, sizeof(string));
+			if (ret > 0)
+				printf("|  |  |    |    |   |  |  |  |  "
+                        "%s \n",
+                        string
+                );
+			else{
+             fprintf(stderr,"Ошибка: дескриптор устройства не получен, код: %d.\n", ret);
+            return;
+            }
+		}
+    }
+    libusb_close(handle);
+}
