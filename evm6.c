@@ -1,7 +1,7 @@
 #include <iostream>
 #include <libusb.h>
 #include <stdio.h>
-using namespace std;
+
 void printdev(libusb_device *dev);
 int main(){
     libusb_device **devs; // указатель на указатель на устройство,
