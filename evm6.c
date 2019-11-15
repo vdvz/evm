@@ -88,7 +88,7 @@ void printdev(libusb_device *dev){
             for(int k=0; k<(int)interdesc->bNumEndpoints; k++) {
                 epdesc = &interdesc->endpoint[k];
                 printf("|  |  |    |    |   |  |  |  |  "
-                        "%.2d %.9d\n",
+                        "%.2d %.9d|\n",
                         (int)epdesc->bDescriptorType,
                         (int)(int)epdesc->bEndpointAddress
                 );
