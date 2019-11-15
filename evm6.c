@@ -37,7 +37,8 @@ int main(){
     printf("|  |  |    |    |   |  |  |  * количество ""конечных точек\n");
     printf("|  |  |    |    |   |  |  |  |  * тип дескриптора\n");
     printf("|  |  |    |    |   |  |  |  |  |  * адрес ""конечной точки\n");
-    printf("+--+--+----+----+---+--+--+--+""--+--+----------------------\n");
+    printf("|  |  |    |    |   |  |  |  |  |  |  |* серийный ""номер\n");
+    printf("+--+--+----+----+---+--+--+--+""--+--+--+-------------------\n");
     for(i = 0; i < cnt; i++) {  //цикл перебора всех устройств
         printdev(devs[i]);//печать параметров устройства
     }
@@ -64,7 +65,7 @@ void printdev(libusb_device *dev){
     //получить конфигурацию устройства
     libusb_get_config_descriptor(dev, 0, &config);
     
-    printf("%.2d %.2d %.4d %.4d %.3d |  |  |  |  |  |\n",
+    printf("%.2d %.2d %.4d %.4d %.3d |  |  |  |  |  |  |\n",
             (int)desc.bNumConfigurations,
             (int)desc.bDeviceClass,
             desc.idVendor,desc.idProduct,
@@ -73,14 +74,14 @@ void printdev(libusb_device *dev){
     for(int i=0; i<(int)config->bNumInterfaces; i++){
         inter = &config->interface[i];
         printf("|  |  |    |    |   "
-                "%.2d %.2d |  |  |  |\n",
+                "%.2d %.2d |  |  |  |  |\n",
                 inter->num_altsetting,
                 (int)desc.bDeviceClass
                 );
         for(int j=0; j<inter->num_altsetting; j++){
             interdesc = &inter->altsetting[j];
             printf("|  |  |    |    |   |  |  "
-                     "%.2d %.2d |  |\n",
+                     "%.2d %.2d |  |  |\n",
                     (int)interdesc->bInterfaceNumber,
                     (int)interdesc->bNumEndpoints);
             
@@ -97,7 +98,7 @@ void printdev(libusb_device *dev){
     
     libusb_free_config_descriptor(config);
     int ret = libusb_open(dev, &handle);
-    char string[256];
+    unsigned char string[256];
     if (LIBUSB_SUCCESS == ret) {
 		if (desc.iSerialNumber) {
 			ret = libusb_get_string_descriptor_ascii(handle, desc.iSerialNumber, string, sizeof(string));
