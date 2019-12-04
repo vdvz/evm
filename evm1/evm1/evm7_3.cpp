@@ -89,20 +89,16 @@ int main(){
 	//R=-AB+I
 	cblas_sgemm(CblasRowMajor,CblasNoTrans,CblasNoTrans,N,N,N,-1.0,matrix_B,N,matrix_A,N,1.0,matrix_R,N);
 	
-
-
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
 			matrix_prev[N*i+j]=matrix_R[N*i + j];
 		}
 	}
 
-
-        
 	//I = R + E
 	cblas_sgemm(CblasRowMajor,CblasNoTrans,CblasNoTrans,N,N,N,1.0,matrix_R,N,matrix_E,N,1.0,matrix_I,N);
+	
 	//Accumulate powers of R in I 
-
 	for (int itter = 0; itter < M-1; itter++) {
 		//mb it would not work
 		cblas_sgemm(CblasRowMajor,CblasNoTrans,CblasNoTrans,N,N,N,1.0,matrix_R,N,matrix_prev,N,0.0,matrix_sub,N);
@@ -113,16 +109,17 @@ int main(){
 		}	
 		cblas_sgemm(CblasRowMajor,CblasNoTrans,CblasNoTrans,N,N,N,1.0,matrix_E,N,matrix_sub,N,1.0,matrix_I,N);
 	}
+	
 	//A^-1=I*B
 	cblas_sgemm(CblasRowMajor,CblasNoTrans,CblasNoTrans,N,N,N,1.0,matrix_I,N,matrix_B,N,0.0,matrix_A,N);
-/*
-	for (int i = 0; i < N; i++) {
+
+	/*for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
 			std::cout << matrix_A[i][j] << " ";
 		}
 		std::cout << "\n";
-	}
-*/
+	}*/
+
 	clock_t t2 = clock();
 	std::cout << 1000.0 * (t2 - t1) / CLOCKS_PER_SEC << "\n";
 	delete matrix_I;
@@ -133,7 +130,5 @@ int main(){
 	delete matrix_prev;
 	delete matrix_sub; 
 
-
-	
     return 0;
 }
