@@ -1,4 +1,4 @@
-
+#include <cmath>
 #include <iostream>
 #include <cstdlib>
 #include <ctime>    
@@ -28,12 +28,6 @@ int main() {
 	matrix_A[3][2] = 1;
 	matrix_A[3][3] = 0;
 	*/
-
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
-			matrix_I[i][j] = 0;
-		}
-	}
 	/*
 		for(int i = 0; i<N; i++){
 			for(int j = 0; j<N; j++){
@@ -43,6 +37,7 @@ int main() {
 	*/
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
+			matrix_I[i][j]=0;
 			if (i == j) {
 				matrix_I[i][j] += 1;
 			}
@@ -162,8 +157,6 @@ int main() {
 			}
 		}
 	}
-
-
 
 	/*for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
