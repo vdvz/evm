@@ -14,7 +14,8 @@ int main() {
 		unsigned long long t64;
 		struct s32{ long th, tl; } t32;
 	} start, end; 
-	double cpu_Hz = 3000000000ULL;
+	double cpu_Hz = 1;
+	//double cpu_Hz = 3000000000ULL;
 
 	int N = N_min;
 	int K = 10;
@@ -34,7 +35,7 @@ int main() {
 		asm("rdtsc\n":"=a"(start.t32.th), "=d"(start.t32.tl));
 		for (k = 0,i = 0; i < N * K; i++) k = array[k];
 		asm("rdtsc\n":"=a"(end.t32.th), "=d"(end.t32.tl));
-		std::cout << "Time per 1 elem straight passage: %lf sec.\n" << (end.t64 - start.t64) / cpu_Hz / N;
+		std::cout << "Time per 1 elem straight passage: %lf sec.\n" << (end.t64 - start.t64) / cpu_Hz / N << "sec.\n";
 
 		//Back passage
 		for (int i = N - 1; i >= 0; i--) {
@@ -48,7 +49,7 @@ int main() {
 		asm("rdtsc\n":"=a"(start.t32.th), "=d"(start.t32.tl));
 		for (k = 0,i = 0; i < N * K; i++) k = array[k];
 		asm("rdtsc\n":"=a"(end.t32.th), "=d"(end.t32.tl));
-		std::cout << "Time per 1 elem back passage: %lf sec.\n" << (end.t64 - start.t64) / cpu_Hz / N;
+		std::cout << "Time per 1 elem back passage:" << (end.t64 - start.t64) / cpu_Hz / N << "sec.\n";
 
 		//Random passage
 		std::srand((unsigned)std::time(NULL));
@@ -68,7 +69,7 @@ int main() {
 		asm("rdtsc\n":"=a"(start.t32.th), "=d"(start.t32.tl));
 		for (k = 0,i = 0; i < N * K; i++) k = array[k];
 		asm("rdtsc\n":"=a"(end.t32.th), "=d"(end.t32.tl));
-		std::cout << "Time per 1 elem random passage: %lf sec.\n" << (end.t64 - start.t64) / cpu_Hz / N;
+		std::cout << "Time per 1 elem random passage: %lf sec.\n" << (end.t64 - start.t64) / cpu_Hz / N << "sec.\n";
 		delete []array;
 		N = N * 2;
 	}
