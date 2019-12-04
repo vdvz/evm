@@ -1,14 +1,15 @@
 #include <cstdlib>
+#include <cmath>
 #include <iostream>
 #include <ctime>
 #include <time.h>
 #include <xmmintrin.h>
 
-int main_2(){
+int main(){
 	struct timespec start, end; 
 
 	clock_t t1 = clock(); 
-	const int N = 100;
+	const int N = 4;
 	const int M = 10;
 	//float *matrix_I = (float*)_mm_malloc(sizeof(float)*N*N, 16);
 	//float *matrix_A = (float*)_mm_malloc(sizeof(float)*N*N, 16);
@@ -26,7 +27,7 @@ int main_2(){
 			std::cout << sub_buffer[2] << "\n";
 			std::cout << sub_buffer[3] << "\n";
 	*/
-	/*
+	
 	matrix_A[0][0] = 0;
 	matrix_A[0][1] = 1;
 	matrix_A[0][2] = 1;
@@ -43,7 +44,7 @@ int main_2(){
 	matrix_A[3][1] = 1;
 	matrix_A[3][2] = 1;
 	matrix_A[3][3] = 0;
-	*/
+	
 
 
 	for (int i = 0; i < N; i++) {
@@ -253,12 +254,12 @@ int main_2(){
 		}
 	}
 
-	/*for (int i = 0; i < N; i++) {
+	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
 			std::cout << matrix_matr[i][j] << " ";
 		}
 		std::cout << "\n";
-	}*/
+	}
 
 	clock_t t2 = clock();
 	std::cout<< 1000.0 * (t2 - t1) / CLOCKS_PER_SEC<<"\n";

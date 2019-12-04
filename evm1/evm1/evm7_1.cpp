@@ -5,13 +5,13 @@
 
 int main() {
 	clock_t t1 = clock();
-	const int N = 100;
+	const int N = 1024;
 	const int M = 10;
 	float matrix_I[N][N];
 	float matrix_A[N][N];
 	float matrix_B[N][N];
 	float matrix_R[N][N];
-	/*matrix_A[0][0] = 0;
+/*	matrix_A[0][0] = 0;
 	matrix_A[0][1] = 1;
 	matrix_A[0][2] = 1;
 	matrix_A[0][3] = 1;
@@ -27,7 +27,7 @@ int main() {
 	matrix_A[3][1] = 1;
 	matrix_A[3][2] = 1;
 	matrix_A[3][3] = 0;
-	*/
+*/	
 	/*
 		for(int i = 0; i<N; i++){
 			for(int j = 0; j<N; j++){
@@ -119,6 +119,14 @@ int main() {
 	}*/
 
 	float sub_matr[N][N];
+	  
+/*                for (int i = 0; i < N; i++) {
+                        for (int j = 0; j < N; j++) {
+                                std::cout << matrix_I[i][j] << " ";
+                        }
+                        std::cout << "\n";
+                }
+*/
 	for (int itter = 0; itter < M-1; itter++) {
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++) {
@@ -128,7 +136,7 @@ int main() {
 				}
 			}
 		}
-		/*std::cout << "MATRIX_I, ITTER: " << itter << "\n";
+/*		std::cout << "MATRIX_I, ITTER: " << itter << "\n";
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++) {
 				std::cout << matrix_I[i][j] << " ";
@@ -147,6 +155,15 @@ int main() {
 				matrix_prev[i][j] = sub_matr[i][j];
 			}
 		}
+	
+	/*std::cout << "MATRIX_I, ITTER: " << itter << "\n";
+                for (int i = 0; i < N; i++) {
+                        for (int j = 0; j < N; j++) {
+                                std::cout << matrix_I[i][j] << " ";
+                        }
+                        std::cout << "\n";
+                }
+*/
 	}
 
 	for (int i = 0; i < N; i++) {
@@ -157,14 +174,14 @@ int main() {
 			}
 		}
 	}
-
-	/*for (int i = 0; i < N; i++) {
+/*
+	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
 			std::cout << sub_matr[i][j] << " ";
 		}
 		std::cout << "\n";
-	}*/
-
+	}
+*/
 	clock_t t2 = clock();
 	std::cout << 1000.0 * (t2 - t1) / CLOCKS_PER_SEC << "\n";
 
