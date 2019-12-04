@@ -100,7 +100,7 @@ int main(){
 			_mm_store_ps(&matrix_B[(4 * i + 3) * N + 4 * j], _mm_div_ps(row3, row_norms));
 		}
 	}
-
+	//std::cout<<"DONE!\n";
 /*
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N ; j++) {
@@ -121,18 +121,18 @@ int main(){
 
 	//multiplay R=I-A*B
 	//Check if matrix_R is not 0;
-	for(int i = 0;i<N*N;i++){
+	for(int i = 0;i<N;i++){
 		for(int k = 0;k<N;k++){
 			auto scalar = _mm_set_ps1(matrix_B[i*N+k]);
-			for(int j = 0; j<ceil(N/4);){
+			for(int j = 0; j<ceil(N/4);j++){
 				auto row_A = _mm_load_ps(&matrix_A[N*k + 4 * j]);
 				auto row_R = _mm_load_ps(&matrix_R[N*k + 4 * j]);
 				row_R = _mm_sub_ps(row_R, _mm_mul_ps(row_A, scalar));
 				_mm_store_ps(&matrix_R[N*k + 4 * j], row_R);			}
 		}
 	}
-
-
+	//std::cout<<"DONE!\n";
+	
 	for (int i = 0; i < ceil(N / 4); i++) {
 		for (int j = 0; j < ceil(N / 4); j++) {
 			auto row_prev0 = _mm_load_ps(&matrix_R[(4 * i)*N+4 * j]);
@@ -149,6 +149,8 @@ int main(){
 			_mm_store_ps(&matrix_I[N*(4 * i + 3)+4 * j], _mm_add_ps(row_prev3, row_I3));
 		}
 	}
+	
+	//std::cout<<"DONE!\n";
 
 	//Duplicate matrix_R to matrix_prev
 	for (int i = 0; i < ceil(N/4); i++) {
@@ -163,7 +165,7 @@ int main(){
 			_mm_store_ps(&matrix_prev[N*(4 * i + 3)+4 * j], row3);
 		}
 	}
-
+	//std::cout<<"DONE!\n";
 	for (int itter = 0; itter < M - 1; itter++) {
 		/*for (int i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++) {
@@ -183,10 +185,10 @@ int main(){
 		}*/
 		
 		//sub=prev*R
-		for(int i = 0;i<N*N;i++){
+		for(int i = 0;i<N;i++){
 			for(int k = 0;k<N;k++){
 				auto scalar = _mm_set_ps1(matrix_prev[i*N+k]);
-				for(int j = 0; j<ceil(N/4);){
+				for(int j = 0; j<ceil(N/4);j++){
 					auto row_R = _mm_load_ps(&matrix_R[N*k + 4 * j]);
 					auto row_sub = _mm_load_ps(&matrix_sub[N*k + 4 * j]);
 					row_sub = _mm_sub_ps(row_sub, _mm_mul_ps(row_R, scalar));
@@ -226,7 +228,7 @@ int main(){
 				_mm_store_ps(&matrix_prev[(4 * i + 3)*N + 4 * j], row3);
 			}
 		}
-
+	//std::cout<<"DONE!\n";
 	}
 
 	/*for (int i = 0; i < N; i++) {
@@ -247,17 +249,17 @@ int main(){
 	}*/
 	
 	//E=I*B
-		for(int i = 0;i<N*N;i++){
+		for(int i = 0;i<N;i++){
 			for(int k = 0;k<N;k++){
 				auto scalar = _mm_set_ps1(matrix_I[i*N+k]);
-				for(int j = 0; j<ceil(N/4);){
+				for(int j = 0; j<ceil(N/4);j++){
 					auto row_B = _mm_load_ps(&matrix_B[N*k + 4 * j]);
 					auto row_E = _mm_load_ps(&matrix_E[N*k + 4 * j]);
 					row_E = _mm_sub_ps(row_E, _mm_mul_ps(row_B, scalar));
 					_mm_store_ps(&matrix_E[N*k + 4 * j], row_E);			}
 			}
 		}
-
+	//std::cout<<"DONE!\n";
 	/*for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
 			std::cout << matrix_sub[N*i + j] << " ";
