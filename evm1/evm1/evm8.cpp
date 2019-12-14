@@ -19,7 +19,7 @@ int main() {
 	int K = 10;
 	int i, k;
 	int value = 10;
-	double sub_time, time = 1111111111111.0;
+	unsigned long long  sub_time , time = 1111111111111.0;
 	while (N <= N_max) {
 		int* array = new int[N];
 		
@@ -37,7 +37,7 @@ int main() {
 		asm("rdtsc\n":"=a"(start.t32.th), "=d"(start.t32.tl));
 		for (k = 0,i = 0; i < N * K; i++) k = array[k];
 		asm("rdtsc\n":"=a"(end.t32.th), "=d"(end.t32.tl));
-		sub_time = (double)(end.t64 - start.t64);
+		sub_time = (end.t64 - start.t64);
 		if (sub_time < time) time = sub_time;
 		}
 		std::cout <<"N: "<< N <<"\nTime per 1 elem straight passage: " << time / K / N << " ticks.\n";
@@ -55,7 +55,7 @@ int main() {
 		asm("rdtsc\n":"=a"(start.t32.th), "=d"(start.t32.tl));
 		for (k = 0,i = 0; i < N * K; i++) k = array[k];
 		asm("rdtsc\n":"=a"(end.t32.th), "=d"(end.t32.tl));
-		sub_time = (double)(end.t64 - start.t64);
+		sub_time = (end.t64 - start.t64);
 		if (sub_time < time) time = sub_time;
 		}
 		std::cout << "Time per 1 elem back passage: " << time / K / N << " ticks.\n";
@@ -80,7 +80,7 @@ int main() {
 		asm("rdtsc\n":"=a"(start.t32.th), "=d"(start.t32.tl));
 		for (k = 0,i = 0; i < N * K; i++) k = array[k];
 		asm("rdtsc\n":"=a"(end.t32.th), "=d"(end.t32.tl));
-		sub_time = (double)(end.t64 - start.t64);
+		sub_time = (end.t64 - start.t64);
 		if (sub_time < time) time = sub_time;
 		}
 		std::cout << "Time per 1 elem random passage: " << time / K / N << " ticks.\n";
