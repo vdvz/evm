@@ -33,7 +33,7 @@ int main() {
 
 		//Passage
 		time = 1111111111111.0;
-		for (int j = 0 ; value < j; j++){
+		for (int j = 0 ; j < value; j++){
 		asm("rdtsc\n":"=a"(start.t32.th), "=d"(start.t32.tl));
 		for (k = 0,i = 0; i < N * K; i++) k = array[k];
 		asm("rdtsc\n":"=a"(end.t32.th), "=d"(end.t32.tl));
@@ -51,7 +51,7 @@ int main() {
 		for (k = 0,i = 0; i < N; i++) k = array[k];
 		//Passage
 		time = 1111111111111.0;
-		for (int j = 0 ; value < j; j++){
+		for (int j = 0 ; j < value; j++){
 		asm("rdtsc\n":"=a"(start.t32.th), "=d"(start.t32.tl));
 		for (k = 0,i = 0; i < N * K; i++) k = array[k];
 		asm("rdtsc\n":"=a"(end.t32.th), "=d"(end.t32.tl));
@@ -76,7 +76,7 @@ int main() {
 		for (k = 0,i = 0; i < N; i++) k = array[k];
 		//Passage
 		time = 1111111111111.0;
-		for (int j = 0 ; value < j; j++){
+		for (int j = 0 ; j < value; j++){
 		asm("rdtsc\n":"=a"(start.t32.th), "=d"(start.t32.tl));
 		for (k = 0,i = 0; i < N * K; i++) k = array[k];
 		asm("rdtsc\n":"=a"(end.t32.th), "=d"(end.t32.tl));
