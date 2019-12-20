@@ -53,14 +53,14 @@ int main(){
 		show_time += (end_proc.tv_sec - start_proc.tv_sec) + 0.000000001 * (end_proc.tv_nsec - start_proc.tv_nsec);
 		
 		char c = cvWaitKey(33);
-	asm("rdtsc\n":"=a"(end_frames.t32.th),"=d"(end_frames.t32.tl));
+		asm("rdtsc\n":"=a"(end_frames.t32.th),"=d"(end_frames.t32.tl));
 		std::cout<<"Frames per second: "<< end_frames.t64-start_frames.t64 <<"\n";
 		if(c == 27) break;
 	}
 	clock_gettime(CLOCK_MONOTONIC, &end);
 	double time = (end.tv_sec - start.tv_sec) + 0.000000001 * (end.tv_nsec - start.tv_nsec);
 	printf("time taken : %lf sec\n", time);
-	printf("fps  : %lf \n", count / time);
+	printf("fps  : %lf \n", count_frames / time);
 	printf("input_time taken : %lf%%\n", input_time/time*100);
 	printf("conversion_time taken : %lf%%\n", conversion_time/time*100);
 	printf("show_time taken : %lf%%\n", show_time/time*100);
