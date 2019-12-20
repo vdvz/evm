@@ -13,7 +13,9 @@ int main(){
     for(i = 1; i <= N; i++){
         int* array = new int[i*OFFSET];
         for(j = 0; j < i*OFFSET; j++){
-            array[j] = (j + OFFSET)%(i*OFFSET);
+            if(j >= (i-1)*OFFSET){
+                array[j] = (j + OFFSET)%(i*OFFSET)+1;
+            } else array[j] = (j + OFFSET)%(i*OFFSET);
         }
     
         asm("rdtsc\n":"=a"(start.t32.th), "=d"(start.t32.tl));

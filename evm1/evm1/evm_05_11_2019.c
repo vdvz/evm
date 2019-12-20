@@ -6,6 +6,7 @@
 #include "opencv2/imgproc/imgproc_c.h"
 #include "opencv2/imgproc/imgproc.hpp"
 #include <iostream>
+#include <cstdio>
 #include <opencv2/core/core.hpp>
 int main(){ 
 	union ticks{
@@ -58,12 +59,18 @@ int main(){
 	}
 	clock_gettime(CLOCK_MONOTONIC, &end);
 	double time = (end.tv_sec - start.tv_sec) + 0.000000001 * (end.tv_nsec - start.tv_nsec);
+	printf("time taken : %lf sec\n", time);
+	printf("fps  : %lf \n", count / time);
+	printf("input_time taken : %lf%%\n", input_time/time*100);
+	printf("conversion_time taken : %lf%%\n", conversion_time/time*100);
+	printf("show_time taken : %lf%%\n", show_time/time*100);
+/*
 	std::cout<<"full time:"<< time<<" sec. \n";
 	std::cout<<"fps"<<count_frames / time<<"\n";
 	std::cout<<"input time: "<<input_time/time*100<<"\n";
 	std::cout<<"conversion time: "<<conversion_time/time*100<<"\n";
 	std::cout<<"show time: "<< show_time/time*100<<"\n";
-	
+*/
 	cvReleaseCapture(&capture);
 	cvDestroyWindow("Image1");
 	cvDestroyWindow("Image2");
