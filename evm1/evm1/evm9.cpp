@@ -9,6 +9,8 @@ int main(){
     
     double time;
     int k, i, j;
+	int value = 10;
+	double sub_time, time = 1111111111111.0;
 
     for(i = 1; i <= N; i++){
         int* array = new int[i*OFFSET];
@@ -18,10 +20,13 @@ int main(){
             } else array[j] = (j + OFFSET)%(i*OFFSET);
         }
     
-        asm("rdtsc\n":"=a"(start.t32.th), "=d"(start.t32.tl));
-        for (k = 0, j = 0; j < i*OFFSET; j++) k = array[k];
-        asm("rdtsc\n":"=a"(end.t32.th), "=d"(end.t32.tl));
-        time = (double)(end.t64 - start.t64);
+        for (int j = 0 ; j < value; j++){
+		asm("rdtsc\n":"=a"(start.t32.th), "=d"(start.t32.tl));
+		for (k = 0,i = 0; i < N * K; i++) k = array[k];
+		asm("rdtsc\n":"=a"(end.t32.th), "=d"(end.t32.tl));
+		sub_time = (double)(end.t64 - start.t64);
+		if (sub_time < time) time = sub_time;
+		}
         std::cout <<"N: "<< i <<"\nTime per 1 elem : " << time / i / OFFSET << " ticks.\n";
         delete array;
     
